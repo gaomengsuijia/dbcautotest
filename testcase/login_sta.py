@@ -7,7 +7,6 @@ sys.path.append(BASE_DIR)
 
 import unittest
 from pageobj.page_login import Page_login
-from bin.mycaps import mycaps
 import time
 
 class Test_login(unittest.TestCase):
@@ -16,6 +15,7 @@ class Test_login(unittest.TestCase):
     '''
 
     def setUp(self):
+        self.pagelogin = Page_login()
         print("test login begin")
 
 
@@ -32,16 +32,16 @@ class Test_login(unittest.TestCase):
 
 
     def user_login_verify(self,username='',password=''):
-        desired_caps = mycaps('Android', '4.4.2', '6248724d', 'true', 'com.ap.dbc.app','com.ap.dbc.app.SplashActivity')
-        pagelogin = Page_login(desired_caps)
+
+
         time.sleep(8)
-        pagelogin.login_view()
+        self.pagelogin.login_view()
         time.sleep(2)
-        pagelogin.login_username(username)
+        self.pagelogin.login_username(username)
         time.sleep(2)
-        pagelogin.login_password(password)
+        self.pagelogin.login_password(password)
         time.sleep(2)
-        pagelogin.login_button()
+        self.pagelogin.login_button()
 
 
 
