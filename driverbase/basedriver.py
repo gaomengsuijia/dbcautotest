@@ -12,6 +12,7 @@ class Basedriver(object):
         self.driver = self.basedriver()
 
 
+
     def basedriver(self):
         '''
         读取配置文件，返回dirver
@@ -29,14 +30,42 @@ class Basedriver(object):
         # desired_caps['appActivity'] = '.ui.activity.LoginActivity'
         desired_caps['appActivity'] = desired_caps_conf['appActivity']
         driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
-        print(desired_caps_conf)
+        # print(desired_caps_conf)
 
         return driver
+
+    def findelment(self,*args):
+        return self.driver.find_element(*args)
+
+
+    def findelments(self,*args):
+        return self.driver.find_elements(*args)
+
+
+    def myswipe(self,*args):
+        return self.driver.swipe(*args)
+
+
+    def get_wind_size(self):
+        x = self.driver.get_window_size()['width']
+        y = self.driver.get_window_size()['height']
+        return (x,y)
+
+    def wait(self,time=10):
+        self.driver.implicitly_wait(time)
+
 
     def close(self):
         self.driver.close()
 
+    def get_activity(self):
+        '''
+        返回当前的activity
+        :return:
+        '''
+        return self.driver.current_activity
+
 
 if __name__=="__main__":
     drive = Basedriver()
-    print(drive)
+    print(drive.get_activity())
