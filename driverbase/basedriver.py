@@ -43,12 +43,29 @@ class Basedriver(object):
 
 
     def myswipe(self,*args):
-        return self.driver.swipe(*args)
+        '''
+        滑动屏幕
+        :param args:
+        :return:
+        '''
+        print(args)
+        self.driver.swipe(*args)
+        print("滑动完成")
+
+    def mytap(self,*args):
+        '''
+        点击屏幕
+        :param args:
+        :return:
+        '''
+        self.driver.tap(*args)
+
 
 
     def get_wind_size(self):
         x = self.driver.get_window_size()['width']
         y = self.driver.get_window_size()['height']
+        print(x,y)
         return (x,y)
 
     def wait(self,time=10):
@@ -66,6 +83,7 @@ class Basedriver(object):
         return self.driver.current_activity
 
 
+
 if __name__=="__main__":
     drive = Basedriver()
-    print(drive.get_activity())
+    print(drive.driver)

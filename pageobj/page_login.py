@@ -2,7 +2,6 @@
 __author__ = "langtuteng"
 from pageobj.page import Page
 from appium.webdriver.common.mobileby import By
-from pageobj import page
 from driverbase import basedriver
 from time import sleep
 class Page_login(Page):
@@ -17,7 +16,7 @@ class Page_login(Page):
     login_head_loc = (By.ID,"com.ap.dbc.app:id/iv_default_heading")
 
     def __init__(self,driver):
-        self.driver = driver
+        self.driver = Page(driver)
 
 
     def login_view(self):
@@ -25,7 +24,10 @@ class Page_login(Page):
         print(self.driver.get_activity())
         if self.driver.get_activity() == '.DbcMainActivity':
             print('ok')
-            self.driver.findelment(*self.login_maintab_loc).click()
+            myelemnt = self.driver.findelment(*self.login_maintab_loc)
+            print(myelemnt)
+            myelemnt.click()
+            print('ok')
 
 
 
@@ -43,5 +45,6 @@ class Page_login(Page):
 if __name__ == "__main__":
     driver = basedriver.Basedriver()
     pagelogin = Page_login(driver)
-    sleep(8)
+    # sleep(8)
+    pagelogin.go_login_page()
     pagelogin.login_view()
