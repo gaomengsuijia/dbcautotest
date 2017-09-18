@@ -6,8 +6,13 @@ from appium.webdriver.common.mobileby import By
 from selenium.common.exceptions import NoSuchElementException,WebDriverException
 class Loginpage(object):
     per_loc = (By.ID,'android:id/button1')
+    login_maintab_loc = (By.ID, "com.ap.dbc.app:id/main_tab_profile_layout")
+    login_username_loc = (By.ID,"com.ap.dbc.app:id/et_login_phone")
+    login_password_loc = (By.ID,"com.ap.dbc.app:id/et_login_psw")
+    login_button_loc = (By.ID,"com.ap.dbc.app:id/bt_login")
+    login_head_loc = (By.ID,"com.ap.dbc.app:id/iv_default_heading")
     def __init__(self,driver):
-        self.driver =  driver
+        self.dr =  driver
 
     def __call__(self):
         # self.driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
@@ -27,11 +32,11 @@ class Loginpage(object):
         向左滑动
         :return:
         '''
-        l = self.driver.get_wind_size()
+        l = self.dr.get_wind_size()
         x1 = int(l[0]*0.9)
         y1 = int(l[1]*0.5)
         x2 = int(l[0]*0.1)
-        self.driver.myswipe(x1,y1,x2,y1,t)
+        self.dr.myswipe(x1,y1,x2,y1,t)
 
 
     def swipe_right(self,t=1000):
@@ -40,11 +45,11 @@ class Loginpage(object):
         @t 滑动时间
         :return:
         '''
-        l = self.driver.get_wind_size()
+        l = self.dr.get_wind_size()
         x1 = int(l[0]*0.25)
         y1 = int(l[1]*0.5)
         x2 = int(l[0]*0.75)
-        self.driver.myswipe(x1,y1,x2,y1,t)
+        self.dr.myswipe(x1,y1,x2,y1,t)
 
     def swipe_top(self,t=1000):
         '''
@@ -52,11 +57,11 @@ class Loginpage(object):
         :param t:
         :return:
         '''
-        l = self.driver.get_wind_size()
+        l = self.dr.get_wind_size()
         x1 = int(l[0] * 0.5)
         y1 = int(l[1] * 0.1)
         y2 = int(l[1] * 0.9)
-        self.driver.myswipe(x1, y1, x1, y2, t)
+        self.dr.myswipe(x1, y1, x1, y2, t)
 
     def swipe_bottom(self,t=1000):
         '''
@@ -64,15 +69,15 @@ class Loginpage(object):
         :param t:
         :return:
         '''
-        l = l = self.driver.get_wind_size()
+        l = l = self.dr.get_wind_size()
         x1 = int(l[0] * 0.5)
         y1 = int(l[1] * 0.9)
         y2 = int(l[1] * 0.1)
-        self.driver.myswipe(x1, y1, x1, y2, t)
+        self.dr.myswipe(x1, y1, x1, y2, t)
 
     def get_per(self):
         try:
-            per = self.driver.findelment(*self.per_loc)
+            per = self.dr.findelment(*self.per_loc)
             per.click()
         except NoSuchElementException as e:
             print("找不到元素")
@@ -83,7 +88,8 @@ class Loginpage(object):
 
 
     def go_login_page(self):
-        for i in range(4):
+        sleep(2)#等待滑动的页面出现，才开始滑动
+        for i in range(5):
             print('开始滑动%s' % str(i))
             self.swipe_left(t=1000)
         sleep(4)
@@ -92,7 +98,28 @@ class Loginpage(object):
         self.get_per()
 
         # 处理新手引导
-        self.driver.mytap([(500, 500)], 500)
+        self.dr.mytap([(500, 500)], 500)
+        sleep(2)
+        #点击进入登录页面
+        self.dr.mytap([(500, 500)], 500)
+        sleep(3)
+        self.find_login_main().click()
+        sleep(2)
+
+
+    def find_login_main(self):
+        self.dr.findelment(*self.login_maintab_loc)
+
+    def find_username_el(self):
+        self.dr.findelment(*self.login_username_loc)
+
+    def find_password_el(self):
+        self.dr.findelment(*self.login_password_loc)
+
+
+    def find_login_el(self):
+        self.dr.findelment(*self.login_button_loc)
+
 
 
 
