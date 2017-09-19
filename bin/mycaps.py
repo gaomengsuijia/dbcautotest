@@ -4,7 +4,7 @@ import os,sys
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 
-def mycaps(platformName,platformVersion,deviceName,autoLaunch,appPackage,appActivity='com.ap.dbc.app.SplashActivity'):
+def mycaps(platformName,platformVersion,deviceName,autoLaunch,appPackage='com.ap.dbc.app',appActivity='com.ap.dbc.app.SplashActivity'):
     print(BASE_DIR)
     desired_caps = {}
     desired_caps['platformName'] = platformName

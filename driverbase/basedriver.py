@@ -3,6 +3,7 @@ __author__ = "langtuteng"
 from utils import readconfig
 from appium import webdriver
 from time import sleep
+from selenium.common.exceptions import NoSuchElementException
 class Basedriver(object):
 
     def __init__(self):
@@ -35,7 +36,11 @@ class Basedriver(object):
         return driver
 
     def findelment(self,*args):
-        return self.driver.find_element(*args)
+        try:
+            print(self.driver.current_activity)
+            return self.driver.find_element(*args)
+        except NoSuchElementException as e:
+            raise NoSuchElementException('找不到元素，the reason is %s'%str(e))
 
 
     def findelments(self,*args):
@@ -72,8 +77,8 @@ class Basedriver(object):
         self.driver.implicitly_wait(time)
 
 
-    def close(self):
-        self.driver.close()
+    def closed(self):
+        self.driver.quit()
 
     def get_activity(self):
         '''

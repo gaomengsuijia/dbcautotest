@@ -1,13 +1,13 @@
 #coding:utf-8
 __author__ = "langtuteng"
-
+from time import sleep
 import os,sys
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
-
 import unittest
-from pageobj.page_login import Page_login
-import time
+from pageobj.loginhandle import Loginhandle
+from driverbase.basedriver import Basedriver
+import HTMLTestRunner
 
 class Test_login(unittest.TestCase):
     '''
@@ -15,34 +15,25 @@ class Test_login(unittest.TestCase):
     '''
 
     def setUp(self):
-        self.pagelogin = Page_login()
         print("test login begin")
+        self.driver = Basedriver()
+        sleep(3)
+        self.loginhandle = Loginhandle(self.driver)
+
 
 
     def tearDown(self):
         print("test login end")
+        self.driver.closed()
 
     @classmethod
     def setUpClass(cls):
         print("start only once")
 
+
     @classmethod
     def tearDownClass(cls):
         print("end only once")
-
-
-    def user_login_verify(self,username='',password=''):
-
-
-        time.sleep(8)
-        self.pagelogin.login_view()
-        time.sleep(2)
-        self.pagelogin.login_username(username)
-        time.sleep(2)
-        self.pagelogin.login_password(password)
-        time.sleep(2)
-        self.pagelogin.login_button()
-
 
 
 
@@ -52,7 +43,7 @@ class Test_login(unittest.TestCase):
         密码正确
         :return:
         '''
-        self.user_login_verify(username='18565660212',password='123456')
+        self.loginhandle.login('123456','18565660212')
         print("login_success")
 
     def login_fail(self):
@@ -61,7 +52,7 @@ class Test_login(unittest.TestCase):
         密码错误
         :return:
         '''
-        self.user_login_verify(username='18565660212',password='654321')
+        self.loginhandle.login('123455', '18565660212')
         print("login_fail")
 
 

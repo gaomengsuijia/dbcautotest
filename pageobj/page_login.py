@@ -1,6 +1,6 @@
 #coding:utf-8
 __author__ = "langtuteng"
-from pageobj.loginpage import Loginpage
+from pageobj.loginelment import Loginpage
 from appium.webdriver.common.mobileby import By
 from driverbase import basedriver
 from time import sleep
@@ -21,24 +21,26 @@ class Page_login():
         #     myelemnt.click()
         #     print('ok')
 
+    def go_logon(self):
+        self.loginpage.find_gologin().click()
+
+    def send_username(self,username):
+        self.loginpage.find_username_el().send_keys(username)
 
 
+    def send_password(self,password):
+        self.loginpage.find_password_el().send_keys(password)
 
-
-
-    def login_username(self,username):
-        self.loginpage.findelment(*self.login_username_loc).send_keys(username)
-
-
-    def login_password(self,password):
-        self.loginpage.findelment(*self.login_password_loc).send_keys(password)
+    def send_code(self,code):
+        self.loginpage.find_code_el().send_keys(code)
 
     def login_button(self):
-        self.loginpage.findelment(*self.login_password_loc).click()
+        self.loginpage.find_login_el().click()
 
 
 if __name__ == "__main__":
     driver = basedriver.Basedriver()
     pagelogin = Page_login(driver)
     # sleep(8)
-    pagelogin.login_view()
+    pagelogin.send_username('18565660212')
+    pagelogin.send_password('123456')
